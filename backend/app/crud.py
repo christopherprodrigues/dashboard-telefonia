@@ -13,7 +13,7 @@ async def create_user(db: AsyncSession, user: schemas.UserCreate) -> models.User
     hashed_password = security.get_password_hash(user.password)
     db_user = models.User(
         email = user.email,
-        hashed_pasword = hashed_password
+        hashed_password = hashed_password
     )
     db.add(db_user)
     await db.commit()
