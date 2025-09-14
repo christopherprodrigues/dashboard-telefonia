@@ -15,7 +15,12 @@ from alembic import context
 load_dotenv()
 
 def get_database_url():
-    return f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
+    user = os.getenv("DB_USER")
+    password = os.getenv("DB_PASSWORD")
+    host = os.getenv("DB_HOST")
+    db_name = os.getenv("DB_NAME")
+
+    return f"postgresql://{user}:{password}@{host}/{db_name}"
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
