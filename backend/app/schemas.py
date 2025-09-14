@@ -18,3 +18,8 @@ class User(UserBase):
 
     class Config:
         from_attributes = True # Permite a conversão de ORM para Pydantic
+        
+# Schema para token JWT
+class Token(BaseModel):
+    access_token: str
+    token_type: str
