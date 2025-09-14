@@ -1,10 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
-import { ProtectedRoute } from './components/ProtectedRoute'; // <-- IMPORTE
-
-function DashboardPage() {
-  return <h1>Dashboard</h1>;
-}
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { DashboardPage } from './pages/DashboardPage';
 
 function App() {
   return (
@@ -14,6 +11,7 @@ function App() {
         path="/"
         element={
           <ProtectedRoute>
+            {/* USE O NOVO COMPONENTE AQUI */}
             <DashboardPage />
           </ProtectedRoute>
         }
