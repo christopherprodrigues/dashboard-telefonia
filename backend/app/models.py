@@ -10,3 +10,15 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     is_admin = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    
+class Call(Base):
+    __tablename__ = "calls"
+
+    id = Column(String, primary_key=True, index=True)
+    source = Column(String, index=True)
+    destination = Column(String, index=True)
+    start_time = Column(DateTime(timezone=True))
+    end_time = Column(DateTime(timezone=True))
+    duration = Column(Integer)
+    sip_code = Column(Integer)
+    ingested_at = Column(DateTime(timezone=True), server_default=func.now())

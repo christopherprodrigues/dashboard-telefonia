@@ -23,3 +23,15 @@ class User(UserBase):
 class Token(BaseModel):
     access_token: str
     token_type: str
+    
+class Call(BaseModel):
+    id: str
+    source: str
+    destination: str
+    start_time: datetime
+    end_time: datetime
+    duration: int
+    sip_code: int
+
+    class Config:
+        from_attributes = True

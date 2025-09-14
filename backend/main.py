@@ -1,7 +1,7 @@
 import sys
 import os
 from app.main import app
-from routers import auth, users
+from routers import auth, users, calls
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -15,6 +15,7 @@ app = FastAPI(
 
 app.include_router(auth.router)
 app.include_router(users.router)
+app.include_router(calls.router)
 
 @app.get("/", tags=["Root"])
 async def read_root():
