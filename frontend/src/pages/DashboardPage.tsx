@@ -1,10 +1,54 @@
+import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import api from '../services/api';
 import { KpiCard } from '../components/KpiCard';
 import { CallsChart } from '../components/CallsChart';
 import { CallsTable } from '../components/CallsTable';
 
+// Definindo os tipos de dados que esperamos da API
+interface KpiData {
+    total_calls: number;
+    answered_calls: number;
+    asr: number;
+    acd: number;
+}
+interface CallData {
+    id: string;
+    source: string;
+    destination: string;
+    duration: number;
+    sip_code: number;
+}
+
 export function DashboardPage() {
     const { logout } = useAuth();
+    const [kpis, setKpis] = useState<KpiData | null>(null);
+    const [calls, setCalls] = useState<CallData[]>([]);
+    const [chartData, setChartData] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                setLoading(true);
+                // Fazemos as duas chamadas de API em paralelo
+                const [metricsResponse, callsResponse] = await Promise.all([
+                    api.get('/api/metrics/'),
+                    api.get('/api/calls/'),
+                ]);
+
+                setKpis(metricsResponse.data.kpis);
+                setChartData(metricsResponse.data.calls_over_time);
+                setCalls(callsResponse.data);
+            } catch (error) {
+                console.error("Failed to fetch dashboard data:", error);
+                // Em um app real, mostraríamos uma mensagem de erro para o usuário
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchData();
+    }, []); // O array vazio [] faz com que o useEffect rode apenas uma vez
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -21,24 +65,28 @@ export function DashboardPage() {
             </header>
 
             <main className="container mx-auto px-6 py-8">
-                {/* Grid para os KPIs */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <KpiCard title="Total de Chamadas" value="..." />
-                    <KpiCard title="Chamadas Atendidas" value="..." />
-                    <KpiCard title="ASR (Taxa de Atendimento)" value="...%" />
-                    <KpiCard title="ACD (Duração Média)" value="...s" />
+                    {loading || !kpis ? (
+                        // Mostra um esqueleto enquanto carrega
+                        Array.from({ length: 4 }).map((_, index) => (
+                            <div key={index} className="bg-white p-6 rounded-lg shadow-md animate-pulse">
+                                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                                <div className="h-8 bg-gray-300 rounded w-1/3 mt-2"></div>
+                            </div>
+                        ))
+                    ) : (
+                        <>
+                            <KpiCard title="Total de Chamadas" value={kpis.total_calls} />
+                            <KpiCard title="Chamadas Atendidas" value={kpis.answered_calls} />
+                            <KpiCard title="ASR (Taxa de Atendimento)" value={`${kpis.asr}%`} />
+                            <KpiCard title="ACD (Duração Média)" value={`${kpis.acd}s`} />
+                        </>
+                    )}
                 </div>
 
-                {/* Grid para o gráfico e a tabela */}
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    {/* O gráfico ocupará 2 colunas no grid de 4 */}
-                    <div className="lg:col-span-2">
-                        <CallsChart />
-                    </div>
-                    {/* A tabela ocupará as 4 colunas */}
-                    <div className="lg:col-span-4">
-                        <CallsTable />
-                    </div>
+                <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
+                    <CallsChart data={chartData} loading={loading} />
+                    <CallsTable data={calls} loading={loading} />
                 </div>
             </main>
         </div>
