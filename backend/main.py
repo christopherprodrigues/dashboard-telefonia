@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import auth, users, calls
+from routers import auth, users, calls, metrics
 
 app = FastAPI(
     title="Dashboard de Telefonia API",
@@ -10,7 +10,7 @@ app = FastAPI(
 app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(calls.router)
-
+app.include_router(metrics.router)
 
 @app.get("/", tags=["Root"], summary="Endpoint raiz da API")
 async def read_root():
