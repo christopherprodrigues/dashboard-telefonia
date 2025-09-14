@@ -1,10 +1,20 @@
-// src/App.tsx
-function App() {
-  return (
-    <div className="text-3xl font-bold text-blue-600">
-      Olá, Frontend!
-    </div>
-  )
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LoginPage } from './pages/LoginPage';
+
+function DashboardPage() {
+  // Por enquanto, apenas um placeholder
+  return <h1>Dashboard</h1>;
 }
 
-export default App
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<DashboardPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
