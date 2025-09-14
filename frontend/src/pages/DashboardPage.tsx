@@ -33,8 +33,8 @@ export function DashboardPage() {
                 setLoading(true);
                 // Fazemos as duas chamadas de API em paralelo
                 const [metricsResponse, callsResponse] = await Promise.all([
-                    api.get('/api/metrics/'),
-                    api.get('/api/calls/'),
+                    api.get('/metrics/'),
+                    api.get('/calls/'),
                 ]);
 
                 setKpis(metricsResponse.data.kpis);
