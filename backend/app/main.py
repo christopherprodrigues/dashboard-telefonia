@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from .routers import auth, users
+from routers import auth, users
 
 app = FastAPI(
     title = "Dashboard Telefonia API",
