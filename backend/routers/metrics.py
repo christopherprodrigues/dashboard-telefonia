@@ -6,7 +6,7 @@ from app.database import get_db_session
 from app.security import get_current_user
 
 router = APIRouter(
-    prefix="/metrics", tags=["Metrics"], dependencies=[Depends(get_current_user)]
+    tags=["Metrics"], dependencies=[Depends(get_current_user)]
 )
 
 

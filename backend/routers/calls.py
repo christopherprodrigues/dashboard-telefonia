@@ -8,7 +8,6 @@ from app.database import get_db_session
 from app.security import get_current_user
 
 router = APIRouter(
-    prefix="/calls",
     tags=["Calls"],
     dependencies=[Depends(get_current_user)],
 )

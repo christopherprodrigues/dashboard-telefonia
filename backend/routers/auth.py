@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app import crud, security, schemas
 from app.database import get_db_session
 
-router = APIRouter(prefix="/token", tags=["Authentication"])
+router = APIRouter(tags=["Authentication"])
 
 
 @router.post("", response_model=schemas.Token)
