@@ -8,8 +8,8 @@ export function LoginPage() {
 
     // Função para lidar com o envio do formulário
     const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault(); // Previne o recarregamento da página
-        setError(''); // Limpa erros anteriores
+        event.preventDefault();
+        setError('');
 
         if (!email || !password) {
             setError('Por favor, preencha ambos os campos.');
@@ -17,13 +17,12 @@ export function LoginPage() {
         }
 
         try {
-            // Usa o axios para fazer a chamada POST para /token
-            // O FastAPI espera os dados como FormData, então usamos URLSearchParams
+            // ESTA É A FORMA CORRETA DE ENVIAR DADOS DE FORMULÁRIO
             const params = new URLSearchParams();
             params.append('username', email);
             params.append('password', password);
 
-            const response = await api.post('/token', params, {
+            const response = await api.post('/token/', params, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -32,7 +31,7 @@ export function LoginPage() {
             const { access_token } = response.data;
             console.log('Login bem-sucedido! Token:', access_token);
 
-            // Próximos passos: salvar o token e redirecionar
+            // TODO: Salvar o token e redirecionar
 
         } catch (err) {
             console.error('Falha no login:', err);

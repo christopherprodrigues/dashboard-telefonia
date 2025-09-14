@@ -8,15 +8,11 @@ from app.database import get_db_session
 router = APIRouter(prefix="/token", tags=["Authentication"])
 
 
-@router.post("/", response_model=schemas.Token)
+@router.post("", response_model=schemas.Token)
 async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: AsyncSession = Depends(get_db_session),
 ):
-    """
-    Autentica o usuário e retorna um token de acesso JWT.
-    Recebe email (no campo 'username') e senha.
-    """
     user = await crud.get_user_by_email(db, email=form_data.username)
 
     if not user or not security.verify_password(
