@@ -4,7 +4,7 @@ from sqlalchemy import select
 
 from . import models, schemas
 
-EXTERNAL_API_URL = "http://217.196.61.183/calls"
+EXTERNAL_API_URL = "http://217.196.61.183:8080/"
 
 async def ingest_calls_from_api(db: AsyncSession):
     """
