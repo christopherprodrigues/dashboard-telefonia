@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
-import { EyeIcon } from '../components/EyeIcon'; // Importa o ícone
+import { EyeIcon } from '../components/EyeIcon';
 
 export function LoginPage() {
     const [email, setEmail] = useState('');
@@ -34,7 +34,7 @@ export function LoginPage() {
             params.append('username', email);
             params.append('password', password);
 
-            const response = await api.post('/token', params, {
+            const response = await api.post('/api/token', params, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             });
             login(response.data.access_token, email);

@@ -42,7 +42,7 @@ export function CallsChart({ data, loading, onBarClick }: CallsChartProps) {
                             {formattedData.map((entry, index) => (
                                 <Cell
                                     cursor="pointer"
-                                    fill={index === activeIndex ? '#1d4ed8' : '#3b82f6'} // Cor mais escura para a barra ativa
+                                    fill={index === activeIndex ? '#1d4ed8' : '#3b82f6'}
                                     key={`cell-${index}`}
                                     onClick={() => handleClick(entry, index)}
                                 />
