@@ -28,7 +28,7 @@ Para executar a aplicação, é necessário ter o **Docker** e o **Docker Compos
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [URL_DO_SEU_REPOSITORIO_NO_GITHUB]
+    git clone https://github.com/christopherprodrigues/dashboard-telefonia
     cd dashboard-telefonia
     ```
 
