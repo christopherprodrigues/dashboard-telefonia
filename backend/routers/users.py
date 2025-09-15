@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app import crud, schemas
 from app.database import get_db_session
 
-router = APIRouter(tags=["Users"])
+router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.post("/", response_model=schemas.User, status_code=status.HTTP_201_CREATED)

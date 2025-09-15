@@ -51,13 +51,15 @@ export function DashboardPage() {
     }, []); // O array vazio [] faz com que o useEffect rode apenas uma vez
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <header className="bg-white shadow-md">
+        <div className="min-h-screen bg-gray-100 font-sans">
+            <header className="bg-white shadow-sm sticky top-0 z-10">
                 <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-                    <h1 className="text-xl font-bold text-gray-800">Dashboard</h1>
+                    <h1 className="text-xl font-bold text-gray-800">
+                        Dashboard de Telefonia
+                    </h1>
                     <button
                         onClick={logout}
-                        className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
+                        className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200"
                     >
                         Sair
                     </button>
@@ -65,9 +67,9 @@ export function DashboardPage() {
             </header>
 
             <main className="container mx-auto px-6 py-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <h2 className="text-2xl font-semibold text-gray-700 mb-6">Visão Geral</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     {loading || !kpis ? (
-                        // Mostra um esqueleto enquanto carrega
                         Array.from({ length: 4 }).map((_, index) => (
                             <div key={index} className="bg-white p-6 rounded-lg shadow-md animate-pulse">
                                 <div className="h-4 bg-gray-200 rounded w-1/2"></div>
@@ -84,9 +86,13 @@ export function DashboardPage() {
                     )}
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
-                    <CallsChart data={chartData} loading={loading} />
-                    <CallsTable data={calls} loading={loading} />
+                <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
+                    <div className="xl:col-span-3">
+                        <CallsChart data={chartData} loading={loading} />
+                    </div>
+                    <div className="xl:col-span-2">
+                        <CallsTable data={calls.slice(0, 5)} loading={loading} />
+                    </div>
                 </div>
             </main>
         </div>
