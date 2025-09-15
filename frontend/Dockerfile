@@ -1,4 +1,4 @@
-# Estágio 1: Build da aplicação React
+# Build da aplicação React
 FROM node:18-alpine AS build
 WORKDIR /app
 COPY package*.json ./
@@ -6,7 +6,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Estágio 2: Servir os arquivos estáticos com Nginx
+# Servir os arquivos estáticos com Nginx
 FROM nginx:stable-alpine
 # Copia os arquivos de build do estágio anterior
 COPY --from=build /app/dist /usr/share/nginx/html
