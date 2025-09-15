@@ -1,4 +1,5 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import { useState } from 'react';
 
 interface ChartData {
     time_period: string;
@@ -8,13 +9,21 @@ interface ChartData {
 interface CallsChartProps {
     data: ChartData[];
     loading: boolean;
+    onBarClick: (hour: string) => void;
 }
 
-export function CallsChart({ data, loading }: CallsChartProps) {
+export function CallsChart({ data, loading, onBarClick }: CallsChartProps) {
+    const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
     const formattedData = data.map(item => ({
         ...item,
         time_period: new Date(item.time_period).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
     }));
+
+    const handleClick = (data: any, index: number) => {
+        onBarClick(data.time_period);
+        setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
+    };
 
     return (
         <div className="bg-white p-6 rounded-xl shadow-lg h-[450px]">
@@ -27,9 +36,18 @@ export function CallsChart({ data, loading }: CallsChartProps) {
                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
                         <XAxis dataKey="time_period" />
                         <YAxis allowDecimals={false} />
-                        <Tooltip />
+                        <Tooltip cursor={{ fill: 'rgba(239, 246, 255, 0.5)' }} />
                         <Legend verticalAlign="bottom" align="center" wrapperStyle={{ paddingTop: '20px' }} />
-                        <Bar dataKey="call_count" fill="#3b82f6" name="Nº de Chamadas" radius={[4, 4, 0, 0]} />
+                        <Bar dataKey="call_count" name="Nº de Chamadas" radius={[4, 4, 0, 0]}>
+                            {formattedData.map((entry, index) => (
+                                <Cell
+                                    cursor="pointer"
+                                    fill={index === activeIndex ? '#1d4ed8' : '#3b82f6'} // Cor mais escura para a barra ativa
+                                    key={`cell-${index}`}
+                                    onClick={() => handleClick(entry, index)}
+                                />
+                            ))}
+                        </Bar>
                     </BarChart>
                 </ResponsiveContainer>
             )}

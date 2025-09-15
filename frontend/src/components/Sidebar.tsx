@@ -1,6 +1,9 @@
 import { MenuIcon } from './MenuIcon';
 import { DashboardIcon } from './DashboardIcon';
 import { PhoneIcon } from './PhoneIcon';
+import { UsersIcon } from './UsersIcon';
+import { ReportsIcon } from './ReportsIcon';
+import { SettingsIcon } from './SettingsIcon';
 
 interface SidebarProps {
     sidebarOpen: boolean;
@@ -11,6 +14,10 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     const menuItems = [
         { name: 'Dashboard', icon: <DashboardIcon /> },
         { name: 'Ramais', icon: <PhoneIcon /> },
+        { name: 'Chamadas', icon: <PhoneIcon /> },
+        { name: 'Usuários', icon: <UsersIcon /> },
+        { name: 'Relatórios', icon: <ReportsIcon /> },
+        { name: 'Configuração', icon: <SettingsIcon /> },
     ];
 
     return (
