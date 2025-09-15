@@ -37,7 +37,7 @@ export function LoginPage() {
             const response = await api.post('/token', params, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             });
-            login(response.data.access_token);
+            login(response.data.access_token, email);
         } catch (err) {
             setError('Email ou senha inválidos.');
         } finally {

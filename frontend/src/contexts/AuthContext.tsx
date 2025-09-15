@@ -1,12 +1,12 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
 interface AuthContextType {
     isAuthenticated: boolean;
-    token: string | null;
-    login: (token: string) => void;
+    userEmail: string | null;
+    login: (token: string, email: string) => void;
     logout: () => void;
 }
 
@@ -18,6 +18,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [token, setToken] = useState<string | null>(localStorage.getItem('authToken'));
+    const [userEmail, setUserEmail] = useState<string | null>(localStorage.getItem('userEmail'));
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,15 +28,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }, [token]);
 
-    const login = (newToken: string) => {
+    const login = (newToken: string, email: string) => {
         localStorage.setItem('authToken', newToken);
+        localStorage.setItem('userEmail', email);
         setToken(newToken);
+        setUserEmail(email);
         api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-        navigate('/'); // Redireciona para o dashboard após o login
+        navigate('/');
     };
 
     const logout = () => {
         localStorage.removeItem('authToken');
+        localStorage.removeItem('userEmail');
         setToken(null);
         delete api.defaults.headers.common['Authorization'];
         navigate('/login'); // Redireciona para o login após o logout
@@ -44,6 +48,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const value = {
         isAuthenticated: !!token,
         token,
+        userEmail,
         login,
         logout,
     };
