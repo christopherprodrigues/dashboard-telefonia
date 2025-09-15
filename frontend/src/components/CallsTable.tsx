@@ -1,3 +1,5 @@
+import { formatPhoneNumber } from '../utils/formatters';
+
 interface Call {
     source: string;
     destination: string;
@@ -30,8 +32,8 @@ export function CallsTable({ data, loading }: CallsTableProps) {
                         ) : (
                             data.map((call, index) => (
                                 <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{call.source}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{call.destination}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{formatPhoneNumber(call.source)}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{formatPhoneNumber(call.destination)}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-right">{call.duration}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-right">{call.sip_code}</td>
                                 </tr>
