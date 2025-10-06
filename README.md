@@ -1,6 +1,6 @@
-# Dashboard de Telefonia - Case Técnico Baldussi Telecom
+# Dashboard de Telefonia - Case Técnico 
 
-Este projeto é uma aplicação web full-stack desenvolvida como parte do processo seletivo da Baldussi Telecom. A aplicação consome dados de chamadas telefônicas, armazena-os em um banco de dados e exibe métricas relevantes em um dashboard interativo e seguro.
+Este projeto é uma aplicação web full-stack desenvolvida como parte de um processo seletivo. A aplicação consome dados de chamadas telefônicas, armazena-os em um banco de dados e exibe métricas relevantes em um dashboard interativo e seguro.
 
 ## Screenshot do Projeto
 
